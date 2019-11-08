@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vanilla JavaScript Tooltip</title>
+    <style>
+        .c-tooltip { 
+            position: absolute;
+            top: 0;
+            left: 10;
+            border-radius: 5px;
+            text-align: center;
+            padding: 10px 20px;
+            margin: 15px;
+            background: #555;
+            color: #fff;
+            -webkit-box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.39);
+            -moz-box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.39);
+            box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.39);
+            z-index: 9999;
+        }
+        .c-tooltip--title {
+            margin: 2px;
+            font-weight: bold;
+        }
+        .c-tooltip--content {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <span class="tooltip">Click the mouse over me to see the tooltip!</span>
+</body>
+<script>
+    let optionsExample = {
+        Title: 'Tooltip title',
+        Content: 'Loren dis qui. Repudiandae, quam quis consequuntur ad eligendi distinctio! Labore in ut explicabo, quaerat ratione vel id? Beatae, quam. Dolorem.',
+        onApprove: function() { console.log('approved') }
+    }
+
+    function showToolTip(options = optionsExample) {
+        console.log('showToolTip trigger')
+        // Setup the html elements
+        const tooltip = document.createElement('div'),
+              tooltipTitle = document.createElement('h3'),
+              tooltipContent = document.createElement('p'),
+              tooltipButton = document.createElement('button');
+        tooltip.className = 'c-tooltip';
+        tooltipTitle.className = 'c-tooltip--title'
+        tooltipContent.className = 'c-tooltip--content'
+        tooltipButton.className = 'c-tooltip--button'
+        tooltipTitle.innerText = options.Title;
+        tooltipContent.innerText = options.Content;
+        tooltipButton.innerText = 'OK';
+        tooltipButton.addEventListener('click', options.onApprove)
+        tooltipButton.addEventListener('click', document.body.removeChild(tooltip));
+        tooltip.appendChild(tooltipTitle);
+        tooltip.appendChild(tooltipContent);
+        tooltip.appendChild(tooltipButton);
+
+        document.body.appendChild(tooltip);
+    }
+
+    document.querySelector('.tooltip').addEventListener('click', showToolTip)
+</script>
+</html>
